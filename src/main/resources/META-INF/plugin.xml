@@ -1,0 +1,27 @@
+<idea-plugin>
+    <id>com.apitest.main.apitest</id>
+    <name>ApiTest</name>
+    <vendor email="joeluo520@gmail.com" url="https://github.com/luojoe/apitest">apitest</vendor>
+
+    <description><![CDATA[
+    https://github.com/luojoe/apitest.<br>
+    <em>https://github.com/luojoe/apitest</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="api.test.main" class="com.apitest.action.ApiTestAction" text="ApiTest" description="TestApi">
+            <add-to-group group-id="CodeMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
