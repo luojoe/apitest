@@ -16,11 +16,11 @@ public enum SpringControllerAnnotation implements PathMappingAnnotation{
 
     private String shortName;
     private String qualifiedName;
-
+    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
-
+    @Override
     public String getShortName() {
         return shortName;
     }

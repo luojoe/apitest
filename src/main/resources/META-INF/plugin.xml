@@ -15,8 +15,9 @@
     -->
     <idea-version since-build="143.0"/>
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.properties</depends>
-    <depends>org.jetbrains.plugins.yaml</depends>
+<!--    <depends>com.intellij.properties</depends>-->
+<!--    <depends>org.jetbrains.plugins.yaml</depends>-->
+<!--    <depends>org.jetbrains.plugins.yaml</depends>-->
     <depends>org.jetbrains.kotlin</depends>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->

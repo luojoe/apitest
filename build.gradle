@@ -20,7 +20,7 @@ dependencies {
 //https://cache-redirector.jetbrains.com/www.jetbrains.com/intellij-repository
 intellij {
     version '2019.1.3'
-//    plugins 'org.jetbrains.kotlin:1.3.11-release-IJ2018.3-1'
+    plugins 'org.jetbrains.kotlin:1.3.11-release-IJ2018.3-1'
 //    setPlugins("org.jetbrains.plugins.yaml:3")
 }
 patchPluginXml {
