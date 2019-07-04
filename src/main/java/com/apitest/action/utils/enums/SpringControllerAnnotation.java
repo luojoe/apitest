@@ -1,11 +1,13 @@
-package com.apitest.action.utils;
+package com.apitest.action.utils.enums;
+
+import com.apitest.action.utils.PathMappingAnnotation;
 
 /**
  * @author joe
  * @data 2019/6/27 20:57
  * @email joeluo520@gmail.com
  */
-public enum SpringControllerAnnotation implements PathMappingAnnotation{
+public enum SpringControllerAnnotation implements PathMappingAnnotation {
     CONTROLLER("Controller", "org.springframework.stereotype.Controller"),
     REST_CONTROLLER("RestController", "org.springframework.web.bind.annotation.RestController");
 

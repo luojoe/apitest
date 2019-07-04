@@ -1,6 +1,7 @@
 package com.apitest.action.utils;
 
 import com.apitest.action.utils.enums.JaxrsRequestAnnotation;
+import com.apitest.action.utils.enums.SpringControllerAnnotation;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;

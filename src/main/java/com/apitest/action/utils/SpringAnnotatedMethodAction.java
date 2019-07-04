@@ -1,5 +1,6 @@
 package com.apitest.action.utils;
 
+import com.apitest.action.utils.enums.SpringControllerAnnotation;
 import com.apitest.action.utils.enums.SpringRequestMethodAnnotation;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
