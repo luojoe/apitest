@@ -21,12 +21,121 @@
     <depends>org.jetbrains.kotlin</depends>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <projectService serviceImplementation="com.zhaow.restful.navigation.action.GotoRequestMappingConfiguration"/>
+        <!-- Add your extensions here -->
+        <productivityFeaturesProvider  implementation="com.zhaow.restful.statistics.RestfulToolkitFeaturesProvider" />
+        <tipAndTrick feature-id="navigation.popup.service" file="GotoService.html"/>
     </extensions>
+    <project-components>
+        <component>
+            <implementation-class>com.zhaow.restful.navigator.RestServicesNavigator</implementation-class>
+        </component>
+        <component>
+            <implementation-class>com.zhaow.restful.navigator.RestServiceProjectsManager</implementation-class>
+        </component>
+        <!--        <component>
+                    <implementation-class>com.zhaow.restful.navigation.action.GotoRequestMappingConfiguration</implementation-class>
+                </component>-->
+        <component>
+            <implementation-class>com.zhaow.restful.navigator.RestServiceDetail</implementation-class>
+        </component>
+    </project-components>
 
     <actions>
         <!-- Add your actions here -->
-        <action id="api.test.main" class="com.apitest.action.ApiTestAction" text="ApiTest" description="TestApi">
-            <add-to-group group-id="CodeMenu" anchor="first"/>
+        <action id="Popup.PopupChoiceAction"
+                class="com.zhaow.restful.popup.action.PopupChoiceAction"
+                text="Popup RESTful Toolkit ..."
+                description="Popup RESTful Toolkit ...">
+            <add-to-group group-id="EditMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift R"/>
         </action>
+
+        <group id="RestfulToolkitGroup" text="RestfulToolkit" description="RESTful Toolkit actions for rest method group"
+        >
+            <!--<add-to-group group-id="EditorPopupMenu" anchor="first"/>-->
+            <action class="com.zhaow.restful.method.action.GenerateFullUrlAction" id="GenerateFullRestUrl" text="Generate &amp;&amp; Copy Full URL">
+                <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            </action>
+            <action class="com.zhaow.restful.method.action.GenerateUrlAction" id="GenerateRestUrl" text="Generate &amp;&amp; Copy Relation URL">
+                <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            </action>
+            <action class="com.zhaow.restful.method.action.GenerateQueryParamJsonAction" id="GenerateRequestBodyJson" text="Generate &amp;&amp; Copy RequestBody (JSON)">
+                <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            </action>
+            <action class="com.zhaow.restful.method.action.GenerateQueryParamAction" id="BuildQueryParam" text="Generate &amp;&amp; Copy Query Param (Key Value)">
+                <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            </action>
+            <!--jaxrs-->
+
+        </group>
+
+
+        <group id="RestfulToolkit.RestMethod.EditorPopupMenu" text="RESTful Toolkit"
+               description="RESTful Toolkit"
+               popup="false">
+            <!--<add-to-group group-id="EditorPopupMenu" anchor="last" relative-to-action="EditorToggleColumnMode"/>-->
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <!--<reference ref="GenerateRestUrl"/>-->
+        </group>
+
+
+        <!--实体中添加 gen json、
+        gen key value for postman( postman 参数 bulk edit )-->
+
+
+        <!--跳转导航： 根据rest url 导航 参考 request mapper  ( Enter mapping url ) 快捷键用 ctl alt n -->
+
+        <!-- show services -->
+        <action id="ConvertClassToJSONAction" class="com.zhaow.restful.action.ConvertClassToJSONAction" text="Convert to JSON" description="Convert to JSON">
+            <add-to-group group-id="EditorPopupMenu" anchor="first" />
+        </action>
+        <action id="ConvertClassToJSONCompressedAction" class="com.zhaow.restful.action.ConvertClassToJSONCompressedAction" text="Convert to JSON (Compressed)" description="Convert to JSON (Compressed)">
+            <add-to-group group-id="EditorPopupMenu" anchor="first" />
+        </action>
+
+        <!-- url 导航 -->
+        <action id="Toolkit.GotoService" class="com.zhaow.restful.navigation.action.GotoRequestMappingAction"
+                text="_Service" description="Go to Service"
+                icon="AllIcons.Actions.Search">
+            <add-to-group group-id="GoToTargetEx" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl BACK_SLASH" />
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt N"/>
+        </action>
+
+        <!--code gen-->
+        <!--
+              <action class="com.zhaow.restful.codegen.SpringBootGenerator" id="CodeGen"
+                      text="SpringBoot Generator"
+                      description="SpringBoot Generator">
+                  <add-to-group group-id="GenerateGroup" anchor="first"/>
+              </action>
+        -->
+
+        <!--刷新-->
+        <action id="Toolkit.RefreshServices" class="com.zhaow.restful.navigator.RefreshProjectAction"
+                text="Refresh Services in Project"
+                icon="AllIcons.Actions.Refresh">
+        </action>
+
+        <group id="Toolkit.NavigatorActionsToolbar">
+            <reference id="Toolkit.RefreshServices"/>
+            <separator/>
+            <reference id="Toolkit.GotoService"/>
+            <separator/>
+        </group>
+
+        <group id="Toolkit.NavigatorServiceMenu">
+            <action id="Menu.CopyFullUrlAction" class="com.zhaow.restful.navigator.CopyFullUrlAction"
+                    text="Copy Full Url"
+                    icon="AllIcons.Actions.Copy">
+            </action>
+            <action id="Menu.EditSourceAction" class="com.zhaow.restful.navigator.EditSourceAction"
+                    text="Jump to Source"
+                    icon="AllIcons.Actions.EditSource">
+            </action>
+            <separator/>
+        </group>
+
     </actions>
 </idea-plugin>
