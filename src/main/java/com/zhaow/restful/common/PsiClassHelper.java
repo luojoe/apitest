@@ -89,14 +89,14 @@ public class PsiClassHelper {
         Object paramValue = null;
 //        todo: using map later
         switch (paramType.toLowerCase()) {
-            case "byte": paramValue = Byte.valueOf("1");break;
+            case "byte": paramValue = Byte.valueOf("6");break;
             case "char": paramValue = Character.valueOf('Z');break;
             case "character": paramValue = Character.valueOf('Z');break;
             case "boolean": paramValue = Boolean.TRUE;break;
             case "int": paramValue = Integer.valueOf(1);break;
             case "integer": paramValue = Integer.valueOf(1);break;
             case "double": paramValue = Double.valueOf(1);break;
-            case "float": paramValue = Float.valueOf(1.0F);break;
+            case "float": paramValue = Float.valueOf(1F);break;
             case "long": paramValue = Long.valueOf(1L);break;
             case "short": paramValue = Short.valueOf("1");break;
             case "bigdecimal": return BigDecimal.ONE;
@@ -107,6 +107,64 @@ public class PsiClassHelper {
         return paramValue;
     }
 
+    public static  String getTestParamValue(String param,String value){
+        try {
+            if (Objects.isNull(value)|| value.contains("demoData")|| value.contains("Z")|| value.contains("6")) {
+                return value;
+            }
+            Integer integer = Integer.parseInt(value);
+            if (!Objects.isNull(param) && integer.equals(1)) {
+                if (param.contains("age")) {
+                    value = "-1,0,20,120";
+                } else if (param.contains("status")) {
+                    value = "-1,0,1,2";
+                }else if(param.contains("type")){
+                    value = "-1,0,1,2";
+                }else if(param.contains("page")){
+                    value = "-1,0,1,10";
+                }
+            }else {
+                value = "-1,0,10,100";
+            }
+            return value;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return value;
+        }
+    }
+
+    String getTestRequestBodyValue(String text){
+        try {
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return text;
+        }
+        return text;
+    }
+
+    public static String getTestRequestBodyValue(String param,String value){
+        try {
+            Integer integer = Integer.parseInt(value);
+            if (!Objects.isNull(param) && integer.equals(1)) {
+                if (param.contains("age")) {
+                    value = "**-1,0,20,200";
+                } else if (param.contains("status")) {
+                    value = "**-1,0,1,2";
+                }else if(param.contains("type")){
+                    value = "**-1,0,1,2";
+                }else if(param.contains("page")){
+                    value = "**-1,0,1,10";
+                }
+            }else {
+                value = "**-1,0,10,100";
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return value;
+        }
+        return value;
+    }
 
     private boolean isJavaBaseType(String typeName) {
         return getJavaBaseTypeDefaultValue(typeName) != null;

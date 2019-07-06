@@ -1,6 +1,7 @@
 package com.zhaow.utils;
 
 
+import com.google.gson.JsonObject;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.module.Module;
@@ -13,8 +14,7 @@ import com.intellij.util.DisposeAwareRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ToolkitUtil {
     public static void runWhenInitialized(final Project project, final Runnable r) {
@@ -175,6 +175,80 @@ public class ToolkitUtil {
         return paramMap;
     }
 
-
-
+    /* 将文本转为 Param Map*/
+    @NotNull
+    public static List<Map<String, String>> textToParamMapList(String text) {
+        List<Map<String, String>> list = new ArrayList<>();
+        //拼装param参数
+        String paramText = text;//serviceInfo.getText();
+        String[] lines = paramText.split("\n");
+        //储存类似 id:1,2,3
+        Map<String, String[]> params = new HashMap<>();
+        //长度最长的那个文件
+        int maxLength = 1;
+        for (String line : lines) {
+            //合法参数键值对 （非//开头，且包含 : ）
+            if (!line.startsWith("//") && line.contains(":")) {
+                String[] prop = line.split(":");
+                if (prop.length > 1) {
+                    String key = prop[0].trim();
+                    String value = prop[1].trim();
+                    String[] valueArray =  value.split(",");
+                    maxLength = maxLength < valueArray.length ? valueArray.length : maxLength;
+                    params.put(key,valueArray);
+                }
+            }
+        }
+        for (int a = 0; a < maxLength; a++) {
+            Map<String, String> map = new HashMap<>();
+            for (String key : params.keySet()) {
+                String[] values = params.get(key);
+                map.put(key,getValue(values,a));
+            }
+            list.add(map);
+        }
+        return list;
+    }
+    /* 将文本转为 Param Map*/
+    @NotNull
+    public static List<String> textToParamJsonStringList(String text) {
+        List<String> list = new ArrayList<>();
+        //拼装param参数
+        String paramText = text;//serviceInfo.getText();
+        String[] lines = paramText.split("\n");
+        //储存类似 id:1,2,3
+        Map<String, String[]> params = new HashMap<>();
+        //长度最长的那个文件
+        int maxLength = 1;
+        for (String line : lines) {
+            //合法参数键值对 （非//开头，且包含 : ）
+            if (!line.startsWith("//") && line.contains(":")) {
+                String[] prop = line.split(":");
+                if (prop.length < 2) {
+                    continue;
+                }
+                String key = prop[0].trim();
+                String value = prop[1].trim();
+                String[] valueArray =  value.split(",");
+                maxLength = maxLength < valueArray.length ? valueArray.length : maxLength;
+                params.put(key,valueArray);
+            }
+        }
+        JsonObject jsonObject = new JsonObject();
+        for (int a = 0; a < maxLength; a++) {
+            for (String key : params.keySet()) {
+                String[] values = params.get(key);
+                jsonObject.addProperty(key,getValue(values,a));
+            }
+            list.add(jsonObject.toString());
+        }
+        return list;
+    }
+    public static String getValue(String[] array,int index){
+        if (array.length > index) {
+            return array[index];
+        }else {
+            return array[0];
+        }
+    }
 }
