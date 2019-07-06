@@ -383,7 +383,7 @@ public class RestServiceStructure  extends SimpleTreeStructure {
 
             }
 
-
+            myRestServiceDetail.removeAllTabbed();
             if (StringUtils.isNotBlank(requestBodyJson)) {
                 myRestServiceDetail.addRequestTestParamsTab(requestParams);
                 myRestServiceDetail.addTestRequestBodyTabPanel(requestBodyJson);

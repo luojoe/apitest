@@ -82,6 +82,7 @@ public class RequestTestHelper {
             httpEntity = new UrlEncodedFormEntity(params);
             HttpPost httpMethod = new HttpPost(completed(url));
             httpMethod.setEntity(httpEntity);
+            response = httpClient.execute(httpMethod);
             HttpEntity entity = response.getEntity();
             String back = toString(entity);
             respondTestEntity.setStatus(response.getStatusLine().getStatusCode());

@@ -161,7 +161,7 @@ public class RestServiceDetail extends JBPanel/*WithEmptyText*/{
     private void bindTestButtonActionListener() {
         testButton.addActionListener(e -> {
             // PluginManagerMain
-            ProgressManager.getInstance().run(new Task.Backgroundable(null,"Sending1111 Request") {
+            ProgressManager.getInstance().run(new Task.Backgroundable(null,"Sending Test Request") {
                 @Override
                 public void run(@NotNull ProgressIndicator indicator) {
                     final Runnable runnable = () -> {
@@ -171,16 +171,17 @@ public class RestServiceDetail extends JBPanel/*WithEmptyText*/{
                             return;
                         }
                         List<String> urlArray = new ArrayList<>();
-                        if (requestParamsTextArea != null) {
-                            String requestParamsText = requestParamsTextArea.getText();
+                        if (requestTestParamsTextArea != null) {
+                            String requestParamsText = requestTestParamsTextArea.getText();
                             List<Map<String, String>> paramMapList = ToolkitUtil.textToParamMapList(requestParamsText);
                             for (Map<String, String> paramMap : paramMapList) {
                                 String temp = baseUrl;
-                                String params = ToolkitUtil.textToRequestParam(requestParamsText);
-                                if (paramMap != null && paramMap.size() > 0) {
-                                    for (String key : paramMap.keySet()) {
-                                        temp = temp.replaceFirst("\\{("+key+"[\\s\\S]*?)\\}",paramMap.get(key));
-                                    }
+                                String params = "";
+                                for (String key : paramMap.keySet()) {
+                                    params = params + key + "=" + paramMap.get(key)+"&";
+                                }
+                                if(params.endsWith("&")){
+                                    params = params.substring(0, params.length() - 1);
                                 }
                                 if (params.length() != 0) {
                                     // 包含了参数
@@ -510,6 +511,23 @@ public class RestServiceDetail extends JBPanel/*WithEmptyText*/{
 
     }
 
+    public void removeAllTabbed() {
+        if (requestParamsTextArea != null) {
+            requestParamsTextArea.setText(null);
+        }
+        if (requestTestParamsTextArea != null) {
+            requestTestParamsTextArea.setText(null);
+        }
+        if (requestBodyTextArea != null) {
+            requestBodyTextArea.setText(null);
+        }
+        if (requestTestBodyTextArea != null) {
+            requestTestBodyTextArea.setText(null);
+        }
+        if (responseTextArea != null) {
+            responseTextArea.setText(null);
+        }
+    }
 
     public void addRequestTabbedPane(String title, JTextArea jTextArea) {
 
@@ -517,7 +535,6 @@ public class RestServiceDetail extends JBPanel/*WithEmptyText*/{
         jTextArea.addKeyListener(new TextAreaKeyAdapter(jTextArea));
 
         requestTabbedPane.addTab(title, jbScrollPane) ;
-
         requestTabbedPane.setSelectedComponent(jbScrollPane) ;//.setSelectedIndex(requestTabbedPane.getTabCount() - 1);
     }
 
