@@ -127,7 +127,9 @@ public class RestServiceStructure  extends SimpleTreeStructure {
     }
 
     public void updateFrom(SimpleNode node) {
-        myTreeBuilder.addSubtreeToUpdateByElement(node);
+        if (node != null) {
+            myTreeBuilder.addSubtreeToUpdateByElement(node);
+        }
     }
 
     private void updateUpTo(SimpleNode node) {
